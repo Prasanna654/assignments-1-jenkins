@@ -2,3 +2,18 @@ Prepartion
 Manotholic application into microservices
 next step planning
 we want slipt microservices into we have to make phase move critical microservices to last
+there are 7 main different 7  types mirgaration startey
+rehost means lift and shift
+replatformReplatform. This strategy is also known as lift, tinker, and shift or lift and reshape. Using this migration strategy, you move the application to the cloud, and you introduce some level of optimization in order to operate the application efficiently, to reduce costs, or to take advantage of cloud capabilities.
+repurchase
+refactor
+The cloud migration refactoring process involves the restructuring of an existing application to make it cloud-ready. 
+relocate
+retire
+retain
+
+
+migration
+monitor
+optimize 
+
