@@ -17,3 +17,5 @@ migration
 monitor
 optimize 
 
+whe you moving database you should be little causies mysql to other database RDS USING BEACSUSE IT IS MANAGE BY AWS
+
