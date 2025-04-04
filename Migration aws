@@ -5,12 +5,12 @@ we want slipt microservices into we have to make phase move critical microservic
 there are 7 main different 7  types mirgaration startey
 rehost means lift and shift
 replatformReplatform. This strategy is also known as lift, tinker, and shift or lift and reshape. Using this migration strategy, you move the application to the cloud, and you introduce some level of optimization in order to operate the application efficiently, to reduce costs, or to take advantage of cloud capabilities.
-repurchase
+repurchase  less used opt using vmare in onprimes using smilialr kind or looking for other options
 refactor
 The cloud migration refactoring process involves the restructuring of an existing application to make it cloud-ready. 
 relocate if we are using kubernetes in onpremes moving eks or openshift
-retire
-retain
+retire  remove the application which is not using 
+retain  keeping thier application  to secure thier data only some application 
 
 
 migration
