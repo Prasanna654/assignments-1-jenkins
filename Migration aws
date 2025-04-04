@@ -8,7 +8,7 @@ replatformReplatform. This strategy is also known as lift, tinker, and shift or 
 repurchase
 refactor
 The cloud migration refactoring process involves the restructuring of an existing application to make it cloud-ready. 
-relocate
+relocate if we are using kubernetes in onpremes moving eks or openshift
 retire
 retain
 
