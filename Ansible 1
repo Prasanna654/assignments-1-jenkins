@@ -1,0 +1,50 @@
+sudo apt update
+clear
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+ssh-keygen
+  cd .ssh/
+ls
+cat id_rsa.pubcd .ssh
+on slave 
+cd .ssh
+ls
+sudo nano authorized_keys
+
+
+
+on master
+cd /etc/ansible
+ls
+sudo nano hosts
+
+
+ansible -m ping all
+sudo nano playbook.yaml
+
+
+
+- name: installing java on Slave01
+  hosts: Slave01
+  become: true
+  tasks:
+  - name: installing java on Slave01
+    apt: name=openjdk-11-jdk update-cache=yes state=latest
+
+- name: installing mysql
+  hosts: Slave02
+  become: true
+  tasks:
+  - name: installing java on Slave02
+    apt: name=mysql-server update-cache=yes state=latest
+
+
+ansible-playbook playbook.yaml --syntax-check
+
+
+ansible-playbook playbook.yaml --check
+
+
+
+ansible-playbook playbook.yaml
