@@ -11,3 +11,30 @@
   tasks:
   - name: installing mysql on slave2
     apt: name=mysql-server update-cache=yes state=latest 
+
+
+
+
+cd /etc/ansible/
+sudo nano hosts
+ansible –m ping all
+ansible –m ping Slave1
+ansible –m ping Slave2
+
+ansible –m ping Slave1
+ansible –m ping Slave2
+sudo nano play1.yaml
+sudo nano play1.yaml
+
+ansible-playbook play1.yaml --syntax-check
+ansible-playbook play1.yaml --check
+ansible-playbook play1.yaml
+
+
+
+
+
+
+
+
+
