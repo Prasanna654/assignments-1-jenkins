@@ -19,3 +19,14 @@ optimize
 
 whe you moving database you should be little causies mysql to other database RDS USING BEACSUSE IT IS MANAGE BY AWS
 
+
+
+
+
+
+ sudo apt update
+    2  sudo apt install mariadb-client -y
+    3  mysql -h database-1.ci1cmi2kyv98.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+    4  HISTORY
+    5  history
+
