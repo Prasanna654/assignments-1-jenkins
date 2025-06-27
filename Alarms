@@ -1,0 +1,435 @@
+You work for XYZ Corporation. To maintain the security of the AWS account and
+the resources you have been asked to implement a solution that can help easily
+recognize and monitor the different users. Also, you will be monitoring the
+machines created by these users for any errors or misconfigurations.
+Tasks To Be Performed:
+1. Create a dashboard which lets you check the CPU utilization and
+networking for a particular EC2 instance
+
+ChatGPT said:
+To implement a solution that helps recognize and monitor different users in your AWS account and monitor their EC2 instances (especially for CPU utilization and networking), here's a high-level and then step-by-step guide for Task 1: Creating a dashboard to check the CPU utilization and networking for a particular EC2 instance.
+
+✅ Solution Overview
+You can use Amazon CloudWatch to monitor EC2 instances, and create a CloudWatch Dashboard to visualize metrics like CPU utilization and network activity.
+
+🔧 Steps to Create a CloudWatch Dashboard for EC2 Monitoring
+Step 1: Enable Detailed Monitoring (Optional but Recommended)
+By default, EC2 instances send metric data to CloudWatch at 5-minute intervals. You can enable detailed monitoring (1-minute intervals) for more granular data.
+
+Go to EC2 Console > Instances.
+
+Select the instance.
+
+Click Actions > Monitor and troubleshoot > Enable detailed monitoring.
+
+Step 2: Identify Key Metrics
+For each EC2 instance, CloudWatch provides the following metrics:
+
+CPUUtilization – % of CPU usage.
+
+NetworkIn – Incoming traffic in bytes.
+
+NetworkOut – Outgoing traffic in bytes.
+
+Step 3: Create the CloudWatch Dashboard
+Go to the CloudWatch Console.
+
+In the left sidebar, click Dashboards > Create dashboard.
+
+Name the dashboard (e.g., EC2-Monitoring-Dashboard).
+
+Choose Line or Number widget (recommended for CPU and network metrics).
+
+Click Configure.
+
+Step 4: Add EC2 Metrics to the Dashboard
+In the metrics selection panel:
+
+Choose EC2 > Per-Instance Metrics.
+
+Select your EC2 instance by instance ID.
+
+Choose:
+
+CPUUtilization
+
+NetworkIn
+
+NetworkOut
+
+Adjust the graph or number widget display options (e.g., time range, period).
+
+Click Add to dashboard.
+
+Repeat to add multiple widgets for different metrics if needed.
+
+Step 5: Save and Share Dashboard
+Click Save dashboard.
+
+Optionally, set IAM policies to control who can view/edit the dashboard.
+
+✅ Optional Enhancements
+Tag EC2 Instances by Owner/User: Add tags like Owner=JohnDoe to track instance ownership.
+
+Use AWS CloudTrail + Config to monitor configuration changes.
+
+Create Alarms: Set CloudWatch alarms for thresholds like CPU > 80% or NetworkOut drops to 0.
+
+Would you like a CloudFormation template or Terraform code to automate this dashboard creation?
+
+
+
+You said:
+explain step by steps
+
+ChatGPT said:
+Sure! Here’s a step-by-step explanation of how to create a CloudWatch dashboard that monitors CPU utilization and networking (NetworkIn/Out) for a specific EC2 instance in your AWS account.
+
+🧭 Step-by-Step Guide to Create a Monitoring Dashboard
+🟩 Step 1: Log in to AWS Console
+Go to: https://console.aws.amazon.com/
+
+Log in with your IAM user credentials or root user (if allowed).
+
+🟩 Step 2: Enable Detailed Monitoring for Your EC2 Instance (Optional but Recommended)
+This helps get more frequent data (1-minute intervals instead of 5).
+
+Open the EC2 Dashboard:
+Go to Services > EC2 > Instances.
+
+Select the EC2 instance you want to monitor.
+
+Click Actions > Monitor and troubleshoot > Enable detailed monitoring.
+
+Confirm the changes.
+
+📌 This may add a small cost but gives more accurate data.
+
+🟩 Step 3: Go to CloudWatch Dashboard
+From the AWS Management Console, go to:
+Services > CloudWatch.
+
+In the left-hand menu, click Dashboards.
+
+Click the “Create dashboard” button.
+
+🟩 Step 4: Name the Dashboard
+Enter a name, for example: EC2-Monitoring-Dashboard.
+
+Click Create dashboard.
+
+🟩 Step 5: Add a Widget
+Choose “Line” or “Number” (line graphs are good for trends; number widgets are good for current values).
+
+Click Next.
+
+🟩 Step 6: Add CPU Utilization Metric
+In the metrics search, click “Browse”.
+
+Choose:
+
+EC2 > Per-Instance Metrics
+
+Find your instance using its Instance ID (you can also search by tags).
+
+Select the checkbox for CPUUtilization.
+
+Click “Create widget”.
+
+🟩 Step 7: Add NetworkIn and NetworkOut Metrics
+Repeat similar steps to add two more widgets:
+
+Go back to the dashboard.
+
+Click “Add widget” again.
+
+Select Line or Number.
+
+Choose:
+
+NetworkIn for incoming traffic.
+
+NetworkOut for outgoing traffic.
+
+Click Create widget after selecting each metric.
+
+🟩 Step 8: Arrange and Save Dashboard
+Drag and resize widgets if needed.
+
+Once satisfied, click Save dashboard in the top-right corner.
+
+🟩 Step 9: (Optional) Set Permissions
+If others in your team need access:
+
+Use IAM policies to grant CloudWatch ReadOnly access to the dashboard.
+
+Or share a read-only link using AWS IAM roles or AWS SSO.
+
+🎯 Example Metrics to Include
+Metric Name	Description	Widget Type
+CPUUtilization	Shows how busy the instance CPU is	Line/Number
+NetworkIn	Incoming network traffic (bytes)	Line/Number
+NetworkOut	Outgoing network traffic (bytes)	Line/Number
+
+Would you like help automating this using a script (like a CloudFormation or Terraform template)?
+
+
+
+You said:
+You work for XYZ Corporation. To maintain the security of the AWS account and
+the resources you have been asked to implement a solution that can help easily
+recognize and monitor the different users. Also, you will be monitoring the
+machines created by these users for any errors or misconfigurations.
+Tasks To Be Performed:
+1. Create a CloudWatch billing alarm which goes off when the estimated
+charges go above $500.
+2. Create a CloudWatch alarm which goes off to an Alarm state when the
+CPU utilization of an EC2 instance goes above 65%. Also add an SNS
+topic so that it notifies the person when the threshold is crossed
+
+ChatGPT said:
+Here's a step-by-step guide to complete both tasks you've been assigned at XYZ Corporation to enhance AWS security and monitoring:
+
+✅ Task 1: Create a CloudWatch Billing Alarm for Charges Over $500
+📌 Prerequisites
+Make sure billing alerts are enabled.
+
+You must be in the N. Virginia (us-east-1) region (Billing metrics are only available here).
+
+🔹 Step 1: Enable Billing Metrics
+Go to Billing Dashboard:
+AWS Console > Billing > Billing Preferences
+
+Enable the option: Receive Billing Alerts.
+
+Click Save Preferences.
+
+🔹 Step 2: Create a Billing Alarm
+Go to CloudWatch Console.
+
+In the left menu, choose Alarms > All alarms > Create alarm.
+
+Click Select metric > Choose:
+
+Billing > Total Estimated Charge > USD
+
+Click Select metric.
+
+🔹 Step 3: Set Threshold
+Statistic: Maximum
+
+Period: 6 hours or 1 day
+
+Threshold type: Static
+
+Whenever metric is... Greater than 500
+
+Click Next.
+
+🔹 Step 4: Create or Select SNS Topic for Notification
+Choose Create new topic:
+
+Name: BillingAlarmTopic
+
+Enter email address(es) to notify
+
+Click Create topic.
+
+Check your email and confirm the subscription.
+
+🔹 Step 5: Finish Alarm Setup
+Name your alarm: HighBillingAlarm-$500
+
+Review and click Create alarm.
+
+✅ Done! Now you'll get notified if charges exceed $500.
+
+✅ Task 2: Create EC2 CPU Alarm + SNS Notification
+This alarm will trigger if CPU Utilization > 65%.
+
+🔹 Step 1: Open CloudWatch Alarms
+Go to CloudWatch Console > Alarms > All alarms > Create alarm
+
+🔹 Step 2: Select EC2 CPU Metric
+Click Select metric > EC2 > Per-Instance Metrics
+
+Select your EC2 instance by Instance ID
+
+Choose CPUUtilization
+
+Click Select metric
+
+🔹 Step 3: Configure Threshold
+Period: 5 minutes (or 1 minute if detailed monitoring is enabled)
+
+Threshold type: Static
+
+Whenever CPUUtilization is greater than 65%
+
+Click Next
+
+🔹 Step 4: Create or Choose SNS Topic
+Choose Create a new topic:
+
+Name: EC2HighCPUAlarmTopic
+
+Add email to notify (e.g. ops@xyz.com)
+
+Click Create topic
+
+Confirm subscription via the email link
+
+🔹 Step 5: Name and Create Alarm
+Alarm name: EC2-High-CPU-Alarm
+
+Review and click Create alarm
+
+✅ Now you’ll receive an alert if CPU usage exceeds 65%.
+
+🧩 Summary
+Task	Description	Trigger	Notification
+Billing Alarm	Estimated charges > $500	$500 threshold	Email via SNS
+CPU Alarm	EC2 CPU > 65%	CPU Utilization	Email via SNS
+
+Would you like to automate this setup with Terraform, CloudFormation, or a Bash + AWS CLI script?
+
+
+
+You said:
+Can you explain step by step
+
+ChatGPT said:
+Absolutely! Below is a clear step-by-step explanation for both tasks to help you implement them successfully in your AWS account.
+
+✅ Task 1: Create a CloudWatch Billing Alarm for Charges Over $500
+🟩 Step 1: Enable Billing Alerts
+Go to the AWS Billing Dashboard:
+👉 https://console.aws.amazon.com/billing/
+
+In the left menu, click Billing preferences.
+
+Check the box: ✅ Receive Billing Alerts.
+
+Click Save preferences.
+
+🔔 This allows CloudWatch to access billing data.
+
+🟩 Step 2: Open CloudWatch in the N. Virginia Region
+Go to the AWS CloudWatch Console:
+👉 https://console.aws.amazon.com/cloudwatch/
+
+Switch to the N. Virginia (us-east-1) region from the top-right corner.
+
+📌 Billing metrics are only available here.
+
+🟩 Step 3: Create the Billing Alarm
+In the left menu, click Alarms > All alarms.
+
+Click the “Create alarm” button.
+
+Click Select metric.
+
+Choose:
+
+Billing → Total Estimated Charge → USD
+
+Click Select metric.
+
+🟩 Step 4: Set Threshold Conditions
+Under Conditions:
+
+Statistic: Maximum
+
+Period: 6 hours (or 1 day for slower updates)
+
+Threshold type: Static
+
+Condition: Greater than 500
+
+Click Next.
+
+🟩 Step 5: Set Up Notification via SNS
+Choose “Create new topic”.
+
+Topic name: BillingAlarmTopic
+
+Email endpoint: enter your email address (e.g. finance@xyz.com)
+
+Click Create topic.
+
+Open your email inbox and click the Confirm Subscription link from AWS.
+
+🟩 Step 6: Name and Create Alarm
+Alarm name: High-Billing-Alarm-$500
+
+Click Next, review everything.
+
+Click Create alarm.
+
+✅ You’ll now be notified via email if AWS charges exceed $500.
+
+✅ Task 2: Create CloudWatch Alarm for EC2 CPU > 65% + SNS Notification
+🟩 Step 1: Open CloudWatch Console
+Go to: https://console.aws.amazon.com/cloudwatch/
+
+Click Alarms in the left menu > All alarms
+
+Click “Create alarm”
+
+🟩 Step 2: Choose EC2 CPU Metric
+Click Select metric
+
+Choose:
+
+EC2 > Per-Instance Metrics
+
+Click on the row with your Instance ID
+
+Select CPUUtilization
+
+Click Select metric
+
+🟩 Step 3: Set Threshold
+Period: Choose 5 minutes (or 1 minute if detailed monitoring is enabled)
+
+Threshold type: Static
+
+Condition: Greater than 65
+
+Click Next
+
+🟩 Step 4: Create Notification (SNS)
+Choose Create new topic
+
+Topic name: EC2HighCPUAlarmTopic
+
+Email address: e.g. admin@xyz.com
+
+Click Create topic
+
+Go to your email and confirm the SNS subscription
+
+🟩 Step 5: Name and Create Alarm
+Alarm name: EC2-CPU-Over-65-Alarm
+
+Click Next, review, then Create alarm
+
+✅ Now you’ll get an alert via email if the EC2 CPU usage goes over 65%.
+
+✅ Summary
+Alarm Type	Trigger	Notified via	Notes
+Billing Alarm	Charges > $500	Email (SNS)	Only in N. Virginia
+EC2 CPU Alarm	CPU > 65%	Email (SNS)	Per-instance alarm
+
+Would you like help setting this up using the AWS CLI, Terraform, or CloudFormation as code?
+
+
+
+
+
+
+
+
+
+
+
