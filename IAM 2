@@ -1,0 +1,204 @@
+To meet XYZ Corporation's security and monitoring requirements, you’ll need to:
+
+Create two custom IAM policies.
+
+Attach them to the appropriate IAM groups (Dev Team and Ops Team).
+
+This assumes IAM groups were created earlier in Task 1 (or can be created now).
+
+✅ Task Breakdown
+🎯 Task 1: Create Policy Number 1 (Dev Team)
+Permissions Required:
+✅ Full access to S3
+
+✅ Can only create EC2 instances (no terminate/describe/start/stop)
+
+✅ Full access to RDS
+
+🧾 Policy 1 JSON:
+json
+Copy
+Edit
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "ec2:RunInstances",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "rds:*",
+      "Resource": "*"
+    }
+  ]
+}
+✅ Create Policy:
+bash
+Copy
+Edit
+aws iam create-policy \
+  --policy-name XYZPolicy-FullS3-RunEC2-FullRDS \
+  --policy-document file://policy1.json
+Save the JSON above to a file named policy1.json.
+
+🎯 Task 2: Create Policy Number 2 (Ops Team)
+Permissions Required:
+✅ Full access to CloudWatch and Billing
+
+✅ Can only list EC2 and S3 resources
+
+🧾 Policy 2 JSON:
+json
+Copy
+Edit
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudwatch:*",
+        "aws-portal:*",
+        "budgets:*",
+        "cur:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+Note: Billing actions (aws-portal:*) require that users have the Billing access setting enabled in the AWS account settings.
+
+✅ Create Policy:
+bash
+Copy
+Edit
+aws iam create-policy \
+  --policy-name XYZPolicy-MonitorBilling-ListEC2S3 \
+  --policy-document file://policy2.json
+Save this as policy2.json.
+
+🎯 Task 3: Attach Policy 1 to Dev Team
+Assuming your Dev Team group is named DevTeam:
+
+bash
+Copy
+Edit
+aws iam attach-group-policy \
+  --group-name DevTeam \
+  --policy-arn arn:aws:iam::123456789012:policy/XYZPolicy-FullS3-RunEC2-FullRDS
+✅ Replace 123456789012 with your actual AWS account ID or retrieve it programmatically.
+
+🎯 Task 4: Attach Policy 2 to Ops Team
+Assuming your Ops Team group is named OpsTeam:
+
+bash
+Copy
+Edit
+aws iam attach-group-policy \
+  --group-name OpsTeam \
+  --policy-arn arn:aws:iam::123456789012:policy/XYZPolicy-MonitorBilling-ListEC2S3
+🧠 Recap
+Task	Done?
+Created policy with S3 + EC2 create + RDS full	✅
+Created policy with CloudWatch + billing + EC2/S3 list	✅
+Attached policy to Dev Team	✅
+Attached policy to Ops Team	✅
+
+Would you like a Bash script that automates all of the above including group creation if they don’t exist?
+
+Task 1: Create a Role with Full Access to VPC and DynamoDB for user1 & user2
+Steps:
+Login to AWS Console with admin rights.
+
+Go to IAM > Roles → Click Create role.
+
+Select AWS account as trusted entity → Choose This account → Click Next.
+
+Attach permissions policies:
+
+AmazonVPCFullAccess
+
+AmazonDynamoDBFullAccess
+
+Click Next: Tags (optional), then Next: Review.
+
+Name the role, e.g., VPC-DynamoDB-FullAccess-Role, then Create role.
+
+Open the role → Go to Trust relationships tab → Click Edit trust policy.
+
+Replace existing policy with this (replace 123456789012 with your AWS account ID):
+
+json
+Copy
+Edit
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": {
+      "AWS": [
+        "arn:aws:iam::123456789012:user/user1",
+        "arn:aws:iam::123456789012:user/user2"
+      ]
+    },
+    "Action": "sts:AssumeRole"
+  }]
+}
+Save the policy.
+
+Task 2: Login as user1 and Assume the Role
+Steps:
+Go to IAM > Users > user1 > Permissions → Add Inline Policy.
+
+Use this JSON (replace 123456789012 with your AWS Account ID):
+
+json
+Copy
+Edit
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole",
+    "Resource": "arn:aws:iam::123456789012:role/VPC-DynamoDB-FullAccess-Role"
+  }
+}
+Name the policy (e.g., AllowAssumeRoleVPCDynamo) and save.
+
+Login as user1 via AWS Console.
+
+Click on username (top right) → Choose Switch Role.
+
+Enter:
+
+Account ID: Your AWS Account ID
+
+Role Name: VPC-DynamoDB-FullAccess-Role
+
+Click Switch Role.
+
+You are now using the role with full access to VPC and DynamoDB.
+
+
+
+
+
+
+
+
+
