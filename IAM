@@ -1,0 +1,140 @@
+You work for XYZ Corporation. To maintain the security of the AWS account and
+the resources you have been asked to implement a solution that can help easily
+recognize and monitor the different users.
+Tasks To Be Performed:
+1. Create 4 IAM users named “Dev1”, “Dev2”, “Test1”, and “Test2”.
+2. Create 2 groups named “Dev Team” and “Ops Team”.
+3. Add Dev1 and Dev2 to the Dev Team.
+4. Add Dev1, Test1 and Test2 to the Ops Team
+
+ChatGPT said:
+Here’s a simple and clear step-by-step guide to perform the required IAM (Identity and Access Management) setup for XYZ Corporation in AWS:
+
+🎯 Goal
+Create IAM users and groups to manage and monitor access to AWS resources securely.
+
+✅ TASKS TO BE PERFORMED
+🔹 Task 1: Create 4 IAM Users
+Steps:
+Go to AWS Management Console
+
+Navigate to IAM → Users → Click “Add Users”
+
+Add the following users (one by one or in bulk):
+
+Dev1
+
+Dev2
+
+Test1
+
+Test2
+
+Access type: Select “Programmatic access” and/or “AWS Management Console access” as needed
+
+Set password (for console access) or generate access key (for CLI/API)
+
+Click Next, and skip permissions for now (you’ll add users to groups later)
+
+Finish the wizard
+
+✅ IAM Users Created
+
+🔹 Task 2: Create 2 IAM Groups
+Steps:
+Go to IAM → User groups → Click “Create group”
+
+Create the following groups:
+
+Dev Team
+
+Ops Team
+
+You can skip attaching permissions for now (add them later if needed)
+
+✅ Groups Created
+
+🔹 Task 3: Add Dev1 and Dev2 to the Dev Team
+Steps:
+Go to IAM → Users
+
+Select Dev1 → Click “Add user to groups” → Select “Dev Team” → Save
+
+Repeat for Dev2
+
+✅ Dev1 and Dev2 added to Dev Team
+
+🔹 Task 4: Add Dev1, Test1, and Test2 to the Ops Team
+Steps:
+Repeat the same process:
+
+Add Dev1, Test1, and Test2 to the Ops Team group
+
+✅ Dev1, Test1, Test2 added to Ops Team
+
+🔐 Optional: Attach Permissions to Groups
+To apply access policies:
+
+Go to IAM → User Groups
+
+Select a group (e.g. Dev Team)
+
+Click “Add permissions”
+
+Choose:
+
+AWS Managed Policies (like AmazonEC2ReadOnlyAccess, etc.)
+
+Or create custom policies
+
+📝 Summary Table
+User	Groups
+Dev1	Dev Team, Ops Team
+Dev2	Dev Team
+Test1	Ops Team
+Test2	Ops Team
+
+📝 Manual Process Summary (No Code Steps)
+🔹 Step 1: IAM → Users → "Add users"
+Create Dev1, Dev2, Test1, Test2
+
+🔹 Step 2: IAM → User Groups → "Create group"
+Create:
+
+Dev Team
+
+Ops Team
+
+🔹 Step 3: IAM → Users → Select user → "Add to group"
+Assign users:
+
+Dev1, Dev2 → Dev Team
+
+Dev1, Test1, Test2 → Ops Team
+
+🔹 Step 4: IAM → Policies → "Create policy"
+Paste the JSON (Policy #1 and #2) → Name them → Save
+
+🔹 Step 5: IAM → User Groups → Select group → "Add permissions"
+Attach Policy #1 to Dev Team
+
+Attach Policy #2 to Ops Team
+
+🔐 Optional: Monitor Access (Still Without Code)
+You can also manually:
+
+View who did what with CloudTrail
+
+Analyze who has access to what using IAM Access Analyzer
+
+✅ Conclusion:
+You do not need to write any code to complete these tasks. The AWS Console provides user-friendly interfaces to do everything with clicks.
+
+
+
+
+
+
+
+
+
